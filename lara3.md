@@ -19,7 +19,7 @@ php artisan db:seed
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Book;
+use App\Models\Sujan;
 use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
@@ -29,18 +29,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Truncate the books table before seeding new data
-        Book::truncate();
+        // Truncate the sujan table before seeding new data
+        Sujan::truncate();
 
         $faker = Faker::create();
 
-        // Loop to create 50 fake books
+        // Loop to create 50 fake entries
         foreach (range(1, 50) as $index) {
-            Book::create([
-                'title' => $faker->sentence(3),
-                'author' => $faker->name,
-                'price' => $faker->randomFloat(2, 5, 100),
-                'quantity' => $faker->numberBetween(1, 50),
+            Sujan::create([
+                'name' => $faker->name, // Full name
+                'father' => $faker->name('male'), // Father's name
+                'age' => $faker->numberBetween(18, 70), // Age between 18 and 70
+                'phone' => $faker->phoneNumber, // Phone number
+                'email' => $faker->unique()->safeEmail, // Unique email
+                'address' => $faker->address, // Address
+                'dob' => $faker->date('Y-m-d', '2005-12-31'), // Date of birth
+                'gender' => $faker->randomElement(['Male', 'Female', 'Other']), // Gender
+                'job' => $faker->jobTitle, // Job title
+                'salary' => $faker->numberBetween(15000, 100000), // Salary between 15,000 and 100,000
+                'place' => $faker->city, // City or place
+                'nid' => $faker->unique()->numerify('############'), // 12-digit National ID
+                'marital_status' => $faker->randomElement(['Single', 'Married', 'Divorced', 'Widowed']), // Marital status
+                'company' => $faker->company, // Employer company
+                'joining_date' => $faker->date('Y-m-d', 'now'), // Date of joining
             ]);
         }
     }
